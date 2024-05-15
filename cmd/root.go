@@ -2,13 +2,13 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 
-	"github.com/lintingzhen/commitizen-go/commit"
-	"github.com/lintingzhen/commitizen-go/git"
 	homedir "github.com/mitchellh/go-homedir"
+	"github.com/pennywisdom/commitizen-go/commit"
+	"github.com/pennywisdom/commitizen-go/git"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -43,7 +43,7 @@ func init() {
 
 func initConfig() {
 	if !debug {
-		log.SetOutput(ioutil.Discard)
+		log.SetOutput(io.Discard)
 	} else {
 		f, err := os.OpenFile("debug.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 		if err != nil {

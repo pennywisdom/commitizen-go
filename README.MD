@@ -9,16 +9,6 @@ Contents
 - Configure
 
 ## Getting Started
-### installation with Homebrew:
-```
-$ brew tap lintingzhen/tap
-$ brew install commitizen-go
-$ sudo commitizen-go install
-```
-### installation with AUR package (Arch Linux):
-```
-$ yay commitizen-go
-```
 ### installation with source code:
 ```
 $ make && make install
@@ -47,6 +37,7 @@ Flags:
   -a, --all     tell the command to automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected
   -d, --debug   debug mode, output debug info to debug.log
   -h, --help    help for commitizen-go
+   -S, --sign    sign the commit and add sign-off line
 
 Use "commitizen-go [command] --help" for more information about a command.
 ```
@@ -54,7 +45,7 @@ Use "commitizen-go [command] --help" for more information about a command.
 ## Configure
 You can set configuration file that `.git-czrc` at repository root or home directory. (You can also add the extension to file, like `.git-czrc.json`)
 The configure file that located in repository root have a priority over the one in home directory.
-The format is the same as the defaultConfig string in the file [commit/defaultConfig.go](https://github.com/lintingzhen/commitizen-go/blob/master/commit/defaultConfig.go).
+The format is the same as the defaultConfig string in the file [commit/defaultConfig.go](https://github.com/pennywisdom/commitizen-go/blob/master/commit/defaultConfig.go).
 
 Type item like that:
 ```

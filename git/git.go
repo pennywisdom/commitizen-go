@@ -3,7 +3,6 @@ package git
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -65,7 +64,7 @@ func CommitMessage(message []byte, all bool, sign bool) ([]byte, error) {
 	// save the commit message to temp file
 	var err error
 	var file *os.File
-	if file, err = ioutil.TempFile("", "COMMIT_MESSAGE_"); err != nil {
+	if file, err = os.CreateTemp("", "COMMIT_MESSAGE_"); err != nil {
 		return nil, err
 	}
 	defer os.Remove(file.Name())
@@ -81,7 +80,7 @@ func CommitMessage(message []byte, all bool, sign bool) ([]byte, error) {
 		cmd.Args = append(cmd.Args, "-a")
 	}
 	if sign {
-		cmd.Args = append(cmd.Args, "-s", "-S")
+		cmd.Args = append(cmd.Args, "-S")
 	}
 
 	return cmd.CombinedOutput()
@@ -112,7 +111,7 @@ func execPath() (string, error) {
 		return "", err
 	}
 
-	result, err := ioutil.ReadAll(stdout)
+	result, err := io.ReadAll(stdout)
 	if err != nil {
 		return "", err
 	}

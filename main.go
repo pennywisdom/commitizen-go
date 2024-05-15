@@ -1,9 +1,12 @@
 package main
 
 import (
-	"github.com/lintingzhen/commitizen-go/cmd"
+	"github.com/pennywisdom/commitizen-go/cmd"
 )
 
 func main() {
-	cmd.Execute()
+	err := cmd.Execute()
+	if err != nil {
+		panic(err)
+	}
 }
