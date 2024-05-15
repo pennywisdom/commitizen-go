@@ -19,6 +19,7 @@ func Execute() error {
 
 var (
 	all     bool
+	sign    bool
 	debug   bool
 	rootCmd = &cobra.Command{
 		Use:  "commitizen-go",
@@ -31,6 +32,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.Flags().BoolVarP(&all, "all", "a", false, "tell the command to automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected")
+	rootCmd.Flags().BoolVarP(&sign, "sign", "S", false, "sign the commit and add sign-off line")
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "debug mode, output debug info to debug.log")
 
 	// viper.BindPFlag("debug", rootCmd.PersistentFlags().Lookup("debug"))
@@ -93,7 +95,7 @@ func RootCmd(command *cobra.Command, args []string) {
 
 	if message, err := commit.FillOutForm(); err == nil {
 		// do git commit
-		result, err := git.CommitMessage(message, all)
+		result, err := git.CommitMessage(message, all, sign)
 		if err != nil {
 			log.Printf("run git commit failed, err=%v\n", err)
 			log.Printf("commit message is: \n\n%s\n\n", string(message))

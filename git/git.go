@@ -41,7 +41,7 @@ func IsCurrentDirectoryGitRepo() (bool, error) {
 	}
 
 	var result []byte
-	if result, err = ioutil.ReadAll(stderr); err != nil {
+	if result, err = io.ReadAll(stderr); err != nil {
 		return false, err
 	}
 
@@ -61,7 +61,7 @@ func WorkingTreeRoot() (path string, err error) {
 	return strings.TrimSpace(string(output)), nil
 }
 
-func CommitMessage(message []byte, all bool) ([]byte, error) {
+func CommitMessage(message []byte, all bool, sign bool) ([]byte, error) {
 	// save the commit message to temp file
 	var err error
 	var file *os.File
@@ -79,6 +79,9 @@ func CommitMessage(message []byte, all bool) ([]byte, error) {
 	cmd.Args = append(cmd.Args, file.Name())
 	if all {
 		cmd.Args = append(cmd.Args, "-a")
+	}
+	if sign {
+		cmd.Args = append(cmd.Args, "-s", "-S")
 	}
 
 	return cmd.CombinedOutput()
